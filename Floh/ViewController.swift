@@ -10,8 +10,13 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    var tweetMentionViewModel:TweetMentionViewModel = {
+        let bearerModel = TweetMentionViewModel()
+        return bearerModel
+    }()
     override func viewDidLoad() {
         super.viewDidLoad()
+        tweetMentionViewModel.getTweets()
         // Do any additional setup after loading the view, typically from a nib.
     }
 

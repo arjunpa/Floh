@@ -13,9 +13,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
+    lazy var globalInstance:FLGlobalInstanceProtocol = {
+        let instance = FLGlobalInstance.init(serviceEndpointPara: ServiceEndpoint.self)
+        return instance
+    }()
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        print(Credentials.combinedValue)
         return true
     }
 
