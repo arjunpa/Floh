@@ -23,7 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow.init(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         let rootController = TweetViewController.init(nibName: nil, bundle:nil)
-        window?.rootViewController = rootController
+        let navigationController = UINavigationController.init(rootViewController: rootController)
+        window?.rootViewController = navigationController
         window?.backgroundColor = UIColor.white
         return true
     }

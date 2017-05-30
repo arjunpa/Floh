@@ -16,13 +16,13 @@
 		C255C1441EDA9E790047219D /* FLGlobalInstanceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C255C1431EDA9E790047219D /* FLGlobalInstanceProtocol.swift */; };
 		C255C1461EDAA3050047219D /* NetworkLayerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C255C1451EDAA3050047219D /* NetworkLayerProtocol.swift */; };
 		C255C1481EDAE8740047219D /* TweetMentionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C255C1471EDAE8740047219D /* TweetMentionViewModel.swift */; };
-		C255C14A1EDAF6A70047219D /* BearerTokenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C255C1491EDAF6A70047219D /* BearerTokenViewModel.swift */; };
 		C255C14C1EDB022B0047219D /* ServiceEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C255C14B1EDB022B0047219D /* ServiceEndpoint.swift */; };
 		C255C14E1EDB3BFA0047219D /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = C255C14D1EDB3BFA0047219D /* Utils.swift */; };
 		C255C1511EDB49480047219D /* BearerToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = C255C1501EDB49480047219D /* BearerToken.swift */; };
 		C286F63E1EDC9063006CBBC1 /* CollectionViewBindingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C286F63D1EDC9063006CBBC1 /* CollectionViewBindingHelper.swift */; };
 		C286F6451EDD00CC006CBBC1 /* TweetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C286F6431EDD00CC006CBBC1 /* TweetCell.swift */; };
 		C286F6461EDD00CC006CBBC1 /* TweetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C286F6441EDD00CC006CBBC1 /* TweetCell.xib */; };
+		C2B136951EDDA131003D37E1 /* IGListCollectionViewLayout.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2B136931EDDA131003D37E1 /* IGListCollectionViewLayout.mm */; };
 		F54D0CB5396658159CFE4C93 /* Pods_Floh.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0246CAE1336E0E5118487862 /* Pods_Floh.framework */; };
 /* End PBXBuildFile section */
 
@@ -41,13 +41,18 @@
 		C255C1431EDA9E790047219D /* FLGlobalInstanceProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FLGlobalInstanceProtocol.swift; sourceTree = "<group>"; };
 		C255C1451EDAA3050047219D /* NetworkLayerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkLayerProtocol.swift; sourceTree = "<group>"; };
 		C255C1471EDAE8740047219D /* TweetMentionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetMentionViewModel.swift; sourceTree = "<group>"; };
-		C255C1491EDAF6A70047219D /* BearerTokenViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BearerTokenViewModel.swift; sourceTree = "<group>"; };
 		C255C14B1EDB022B0047219D /* ServiceEndpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceEndpoint.swift; sourceTree = "<group>"; };
 		C255C14D1EDB3BFA0047219D /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		C255C1501EDB49480047219D /* BearerToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BearerToken.swift; sourceTree = "<group>"; };
 		C286F63D1EDC9063006CBBC1 /* CollectionViewBindingHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewBindingHelper.swift; sourceTree = "<group>"; };
 		C286F6431EDD00CC006CBBC1 /* TweetCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetCell.swift; sourceTree = "<group>"; };
 		C286F6441EDD00CC006CBBC1 /* TweetCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TweetCell.xib; sourceTree = "<group>"; };
+		C2B136901EDDA131003D37E1 /* Floh-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Floh-Bridging-Header.h"; sourceTree = "<group>"; };
+		C2B136911EDDA131003D37E1 /* IGListAssert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGListAssert.h; sourceTree = "<group>"; };
+		C2B136921EDDA131003D37E1 /* IGListCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGListCollectionViewLayout.h; sourceTree = "<group>"; };
+		C2B136931EDDA131003D37E1 /* IGListCollectionViewLayout.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = IGListCollectionViewLayout.mm; sourceTree = "<group>"; };
+		C2B136941EDDA131003D37E1 /* IGListCollectionViewLayoutInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGListCollectionViewLayoutInternal.h; sourceTree = "<group>"; };
+		C2B136961EDDA144003D37E1 /* IGListMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGListMacros.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,7 +102,6 @@
 				C255C1471EDAE8740047219D /* TweetMentionViewModel.swift */,
 				C227EBA51EDC620C004B1700 /* TweetViewModel.swift */,
 				C286F63D1EDC9063006CBBC1 /* CollectionViewBindingHelper.swift */,
-				C255C1491EDAF6A70047219D /* BearerTokenViewModel.swift */,
 				C255C1501EDB49480047219D /* BearerToken.swift */,
 				C255C14B1EDB022B0047219D /* ServiceEndpoint.swift */,
 				C255C14D1EDB3BFA0047219D /* Utils.swift */,
@@ -108,8 +112,22 @@
 				C255C1381EDA75720047219D /* Assets.xcassets */,
 				C255C13A1EDA75720047219D /* LaunchScreen.storyboard */,
 				C255C13D1EDA75720047219D /* Info.plist */,
+				C2B1368F1EDDA01B003D37E1 /* CustomLayout */,
 			);
 			path = Floh;
+			sourceTree = "<group>";
+		};
+		C2B1368F1EDDA01B003D37E1 /* CustomLayout */ = {
+			isa = PBXGroup;
+			children = (
+				C2B136911EDDA131003D37E1 /* IGListAssert.h */,
+				C2B136921EDDA131003D37E1 /* IGListCollectionViewLayout.h */,
+				C2B136931EDDA131003D37E1 /* IGListCollectionViewLayout.mm */,
+				C2B136941EDDA131003D37E1 /* IGListCollectionViewLayoutInternal.h */,
+				C2B136961EDDA144003D37E1 /* IGListMacros.h */,
+				C2B136901EDDA131003D37E1 /* Floh-Bridging-Header.h */,
+			);
+			name = CustomLayout;
 			sourceTree = "<group>";
 		};
 		DC75E24789DB767577ECAE3A /* Pods */ = {
@@ -157,6 +175,7 @@
 					C255C12D1EDA75720047219D = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = ZE2EAVJ28G;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -248,9 +267,9 @@
 			files = (
 				C255C1511EDB49480047219D /* BearerToken.swift in Sources */,
 				C255C14C1EDB022B0047219D /* ServiceEndpoint.swift in Sources */,
+				C2B136951EDDA131003D37E1 /* IGListCollectionViewLayout.mm in Sources */,
 				C255C1441EDA9E790047219D /* FLGlobalInstanceProtocol.swift in Sources */,
 				C286F6451EDD00CC006CBBC1 /* TweetCell.swift in Sources */,
-				C255C14A1EDAF6A70047219D /* BearerTokenViewModel.swift in Sources */,
 				C255C1481EDAE8740047219D /* TweetMentionViewModel.swift in Sources */,
 				C255C1341EDA75720047219D /* TweetViewController.swift in Sources */,
 				C227EBA61EDC620C004B1700 /* TweetViewModel.swift in Sources */,
@@ -379,11 +398,14 @@
 			baseConfigurationReference = 9D1D3DCE47D21B4816711901 /* Pods-Floh.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = ZE2EAVJ28G;
 				INFOPLIST_FILE = Floh/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.arjun.Floh;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Floh/Floh-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -393,11 +415,13 @@
 			baseConfigurationReference = 81A8BEB492D72952E8F303C8 /* Pods-Floh.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = ZE2EAVJ28G;
 				INFOPLIST_FILE = Floh/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.arjun.Floh;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Floh/Floh-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

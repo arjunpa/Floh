@@ -64,6 +64,7 @@ class TweetMentionViewModel:BaseViewModel{
                 return SignalProducer.empty
             }
             .flatMap(FlattenStrategy.latest) { (token) -> SignalProducer<Optional<TweetViewModel>, NSError> in
+                
 //                if let _ = token?.access_token{
 //                    UserDefaults.standard.set(Mapper<BearerToken>().toJSON(token!), forKey: "bearToken")
 //                    UserDefaults.standard.synchronize()
@@ -90,6 +91,8 @@ class TweetMentionViewModel:BaseViewModel{
     
     fileprivate func authenticateWith() -> SignalProducer<Optional<BearerToken>, NSError>{
         
+        //cache authentication token if required. But then you also have to manage the situation where it might be expired.
+        
 //        if let tokenObj = UserDefaults.standard.value(forKey: "bearToken"){
 //            return SignalProducer{
 //                (observer:Observer<Optional<BearerToken>, NSError>, _) in
@@ -110,7 +113,7 @@ class TweetMentionViewModel:BaseViewModel{
     
     
     fileprivate func getTweetsWith(token:BearerToken) -> SignalProducer<Optional<TweetViewModel>, NSError>{
-   //     let endpoint = nextPageURL != nil ? self._endPoint.tweetSearchURL + nextPageURL! : self._endPoint.tweetSearchURL
+
         let endpoint = self._endPoint.tweetSearchURL
         var params:[String:Any] = [:]
         

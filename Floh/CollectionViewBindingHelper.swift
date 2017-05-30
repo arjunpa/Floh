@@ -84,6 +84,10 @@ class DataSource: NSObject, UICollectionViewDelegate,UICollectionViewDataSource,
         
     }
     
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let dequeueCell = collectionView.dequeueReusableCell(withReuseIdentifier: self.identifier, for: indexPath)
         guard let realCell = dequeueCell as? ReactiveView, let item = data?.safeIndex(i: indexPath.item) else{return UICollectionViewCell()}
@@ -99,8 +103,28 @@ class DataSource: NSObject, UICollectionViewDelegate,UICollectionViewDataSource,
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard let sizingCell = cell as? ReactiveView, let item = data?.safeIndex(i: indexPath.item) else {return CGSize.init(width: UIScreen.main.bounds.width, height: 1)}
         sizingCell.bindViewModel(viewModel: item)
-        return sizingCell.sizeThatFitsPreferredTargetWith(targetSize: UIScreen.main.bounds.size)
+        let proposedTargetSize = CGSize.init(width: UIScreen.main.bounds.width - 20, height: UIScreen.main.bounds.height)
+        var fittingSize = sizingCell.sizeThatFitsPreferredTargetWith(targetSize: proposedTargetSize)
+        fittingSize.height += 10
+        return fittingSize
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize.init(width: UIScreen.main.bounds.width, height: 40)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsetsMake(0, 10, 0, 10)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
+    }
+    
 }
 extension DataSource:UIScrollViewDelegate{
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
