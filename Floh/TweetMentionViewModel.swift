@@ -64,10 +64,10 @@ class TweetMentionViewModel:BaseViewModel{
                 return SignalProducer.empty
             }
             .flatMap(FlattenStrategy.latest) { (token) -> SignalProducer<Optional<TweetViewModel>, NSError> in
-                if let _ = token?.access_token{
-                    UserDefaults.standard.set(Mapper<BearerToken>().toJSON(token!), forKey: "bearToken")
-                    UserDefaults.standard.synchronize()
-                }
+//                if let _ = token?.access_token{
+//                    UserDefaults.standard.set(Mapper<BearerToken>().toJSON(token!), forKey: "bearToken")
+//                    UserDefaults.standard.synchronize()
+//                }
                 return self.getTweetsWith(token: token!)
             }
             .flatMapError { (error) -> SignalProducer<Optional<TweetViewModel>, NSError> in

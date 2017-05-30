@@ -24,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         let rootController = TweetViewController.init(nibName: nil, bundle:nil)
         window?.rootViewController = rootController
+        window?.backgroundColor = UIColor.white
         return true
     }
 
