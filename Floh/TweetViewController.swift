@@ -58,6 +58,11 @@ extension TweetViewController:CollectionViewBindingHelperDelegate{
     func paginateInResponseToScroll() {
         tweetMentionViewModel.getTweets()
     }
+    
+    func didPullToRefresh() {
+        tweetMentionViewModel.reset()
+        tweetMentionViewModel.getTweets()
+    }
 }
 
 

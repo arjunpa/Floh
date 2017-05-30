@@ -38,8 +38,8 @@ extension NetworkLayerProtocol{
     func dataWithRequest(url:URLConvertible, method:HTTPMethod,params:[String:Any]? = nil, headers:[String:String]? = nil, parameterEncoding:ParameterEncoding? = URLEncoding.default) -> SignalProducer<Optional<Data>, NSError>{
         
         return SignalProducer{
-            (observer:Observer<Optional<Data>, NSError>, _) in
-            self.requestWithParameters(url: url, method: method, params: params, headers: headers, parameterEncoding: parameterEncoding)
+            (observer:Observer<Optional<Data>, NSError>, disposable) in
+            let request = self.requestWithParameters(url: url, method: method, params: params, headers: headers, parameterEncoding: parameterEncoding)
                 .responseData(completionHandler: { (response) in
                     if let someError = response.error{
                         observer.send(error: someError as NSError)
@@ -47,15 +47,19 @@ extension NetworkLayerProtocol{
                     else{
                         observer.send(value: response.data)
                     }
+                    observer.sendCompleted()
                 })
+            disposable.add {
+                request.cancel()
+            }
             
         }
     }
     
     func mappableArrayWithRequest<T:Mappable>(url:URLConvertible, method:HTTPMethod,params:[String:Any]? = nil, headers:[String:String]? = nil, parameterEncoding:ParameterEncoding? = URLEncoding.default) -> SignalProducer<Optional<[T]>, NSError>{
         return SignalProducer{
-            (observer:Observer<Optional<[T]>, NSError>, _) in
-            self.requestWithParameters(url: url, method: method, params: params, headers: headers, parameterEncoding: parameterEncoding)
+            (observer:Observer<Optional<[T]>, NSError>, disposable) in
+            let request = self.requestWithParameters(url: url, method: method, params: params, headers: headers, parameterEncoding: parameterEncoding)
                 .responseJSON(completionHandler: { (response) in
                     if let someError = response.error{
                         observer.send(error: someError as NSError)
@@ -69,7 +73,12 @@ extension NetworkLayerProtocol{
                             observer.send(error: NSError.init(domain: "Data is empty", code: -1, userInfo: nil))
                         }
                     }
+                    observer.sendCompleted()
+                  
                 })
+            disposable.add {
+                request.cancel()
+            }
         }
     }
     
@@ -77,8 +86,8 @@ extension NetworkLayerProtocol{
     
     func mappableWithRequest<T:Mappable>(url:URLConvertible, method:HTTPMethod,params:[String:Any]? = nil, headers:[String:String]? = nil, parameterEncoding:ParameterEncoding? = URLEncoding.default) -> SignalProducer<Optional<T>, NSError>{
         return SignalProducer{
-            (observer:Observer<Optional<T>, NSError>, _) in
-            self.requestWithParameters(url: url, method: method, params: params, headers: headers, parameterEncoding: parameterEncoding)
+            (observer:Observer<Optional<T>, NSError>, disposable) in
+            let request = self.requestWithParameters(url: url, method: method, params: params, headers: headers, parameterEncoding: parameterEncoding)
             .responseJSON(completionHandler: { (response) in
                 if let someError = response.error{
                     observer.send(error: someError as NSError)
@@ -92,14 +101,19 @@ extension NetworkLayerProtocol{
                         observer.send(error: NSError.init(domain: "Data is empty", code: -1, userInfo: nil))
                     }
                 }
+                observer.sendCompleted()
             })
+            
+            disposable.add {
+                request.cancel()
+            }
         }
     }
     
     func jsonWithRequest(url:URLConvertible, method:HTTPMethod,params:[String:Any]? = nil, headers:[String:String]? = nil, parameterEncoding:ParameterEncoding? = URLEncoding.default) -> SignalProducer<Optional<Any>, NSError>{
         return SignalProducer{
-            (observer:Observer<Optional<Any>, NSError>, _) in
-            self.requestWithParameters(url: url, method: method, params: params, headers: headers, parameterEncoding: parameterEncoding)
+            (observer:Observer<Optional<Any>, NSError>, disposable) in
+            let request = self.requestWithParameters(url: url, method: method, params: params, headers: headers, parameterEncoding: parameterEncoding)
             .responseJSON(completionHandler: { (response) in
                 if let someError = response.error{
                     observer.send(error: someError as NSError)
@@ -107,7 +121,11 @@ extension NetworkLayerProtocol{
                 else{
                     observer.send(value: response.value)
                 }
+                observer.sendCompleted()
             })
+            disposable.add {
+                request.cancel()
+            }
         }
     }
 }

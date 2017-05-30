@@ -40,13 +40,23 @@ class TweetMentionViewModel:BaseViewModel{
     fileprivate var nextPageURL:String?
     let isSearching = MutableProperty<Bool>(false)
     let isLastPage = MutableProperty<Bool>(false)
+    fileprivate var _disposable:Disposable?
+    func reset(){
+        isSearching.value = false
+        isLastPage.value = false
+        _disposable?.dispose()
+        nextPageURL = nil
+        tweets.value.removeAll()
+    }
+    
+    
     
     func getTweets(){
         if isSearching.value || isLastPage.value{
             return
         }
         isSearching.value = true
-        authenticateWith()
+        _disposable = authenticateWith()
             .observe(on: QueueScheduler.main)
             .flatMapError { (error) -> SignalProducer<Optional<BearerToken>, NSError> in
                 print(error)
@@ -54,7 +64,7 @@ class TweetMentionViewModel:BaseViewModel{
                 return SignalProducer.empty
             }
             .flatMap(FlattenStrategy.latest) { (token) -> SignalProducer<Optional<TweetViewModel>, NSError> in
-                if let tokend = token?.access_token{
+                if let _ = token?.access_token{
                     UserDefaults.standard.set(Mapper<BearerToken>().toJSON(token!), forKey: "bearToken")
                     UserDefaults.standard.synchronize()
                 }
@@ -80,17 +90,17 @@ class TweetMentionViewModel:BaseViewModel{
     
     fileprivate func authenticateWith() -> SignalProducer<Optional<BearerToken>, NSError>{
         
-        if let tokenObj = UserDefaults.standard.value(forKey: "bearToken"){
-            return SignalProducer{
-                (observer:Observer<Optional<BearerToken>, NSError>, _) in
-                if let mappedProperly = Mapper<BearerToken>().map(JSONObject: tokenObj){
-                    observer.send(value: mappedProperly)
-                }
-                else{
-                    observer.send(error: NSError.init(domain: "Cache not found", code: -1, userInfo: nil))
-                }
-            }
-        }
+//        if let tokenObj = UserDefaults.standard.value(forKey: "bearToken"){
+//            return SignalProducer{
+//                (observer:Observer<Optional<BearerToken>, NSError>, _) in
+//                if let mappedProperly = Mapper<BearerToken>().map(JSONObject: tokenObj){
+//                    observer.send(value: mappedProperly)
+//                }
+//                else{
+//                    observer.send(error: NSError.init(domain: "Cache not found", code: -1, userInfo: nil))
+//                }
+//            }
+//        }
         
         return self._networkLayer.mappableWithRequest(url: self._endPoint.bearerTokenURL, method: HTTPMethod.post, params: [
             "grant_type":"client_credentials"], headers: ["Content-Type":"application/x-www-form-urlencoded;charset=UTF-8", "Authorization": "Basic" + " " + Credentials.combinedValue], parameterEncoding: URLEncoding.default)

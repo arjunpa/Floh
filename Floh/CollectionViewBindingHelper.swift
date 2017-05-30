@@ -18,6 +18,7 @@ import Result
 
 protocol CollectionViewBindingHelperDelegate:class{
     func paginateInResponseToScroll()
+    func didPullToRefresh()
 }
 
 class CollectionViewBindingHelper<T:AnyObject>:NSObject{
@@ -27,7 +28,8 @@ class CollectionViewBindingHelper<T:AnyObject>:NSObject{
     fileprivate var sizingCell:Dictionary<String, UICollectionViewCell> = [:]
     fileprivate var dataSource:DataSource
     var collectionViewBindingHelperDelegate:CollectionViewBindingHelperDelegate?
-
+    fileprivate var _refreshControl:UIRefreshControl!
+    
     init(collectionView:UICollectionView, sourceSignal:SignalProducer<[T], NoError>, nibName:String){
         self.collection_view = collectionView
         self.sourceSignal = sourceSignal
@@ -36,21 +38,34 @@ class CollectionViewBindingHelper<T:AnyObject>:NSObject{
         sizingCell[nibName] = nib.instantiate(withOwner: nil, options: nil)[0] as! TweetCell
         collectionView.register(nib, forCellWithReuseIdentifier: nibName)
         dataSource = DataSource.init(data: nil, cell: sizingCell[nibName]!, identifier: nibName)
+        
         super.init()
         self.collection_view.dataSource = dataSource
         self.collection_view.delegate = dataSource
+        self.addPullToRefresh()
         sourceSignal.startWithResult { [weak self](result) in
             guard let weakSelf = self, let dataNotNil = result.value else{return}
             let newData = dataNotNil.map({$0 as AnyObject})
             weakSelf.dataSource.data = newData
+            weakSelf._refreshControl.endRefreshing()
             self?.collection_view.reloadData()
         }
         
         dataSource.completionForScrollPagination = { () in
             self.collectionViewBindingHelperDelegate?.paginateInResponseToScroll()
         }
+        
     }
-
+    private func addPullToRefresh(){
+        _refreshControl = UIRefreshControl.init()
+        self.collection_view.addSubview(_refreshControl)
+        _refreshControl.addTarget(self, action: #selector(CollectionViewBindingHelper.pulledToRefresh), for: .valueChanged)
+    }
+    
+    @objc private func pulledToRefresh(){
+        self.collectionViewBindingHelperDelegate?.didPullToRefresh()
+    }
+    
 }
 
 class DataSource: NSObject, UICollectionViewDelegate,UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
@@ -66,6 +81,7 @@ class DataSource: NSObject, UICollectionViewDelegate,UICollectionViewDataSource,
         self.cell = cell
         self.identifier = identifier
         super.init()
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
