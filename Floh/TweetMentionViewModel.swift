@@ -18,6 +18,7 @@ class BaseViewModel{
     
     var _endPoint:EndpointProtocol.Type
     var _networkLayer:NetworkLayerProtocol
+
     required init(endpointPara:EndpointProtocol.Type = ServiceEndpoint.self, networkLayer:NetworkLayerProtocol? = nil) {
         
         
@@ -35,27 +36,61 @@ class BaseViewModel{
 
 class TweetMentionViewModel:BaseViewModel{
     
+    let tweets = MutableProperty<[StatusViewModel]>([StatusViewModel]())
+    fileprivate var nextPageURL:String?
+    let isSearching = MutableProperty<Bool>(false)
+    let isLastPage = MutableProperty<Bool>(false)
+    
     func getTweets(){
-        
-            authenticateWith()
+        if isSearching.value || isLastPage.value{
+            return
+        }
+        isSearching.value = true
+        authenticateWith()
             .observe(on: QueueScheduler.main)
             .flatMapError { (error) -> SignalProducer<Optional<BearerToken>, NSError> in
                 print(error)
+                self.isSearching.value = false
                 return SignalProducer.empty
             }
             .flatMap(FlattenStrategy.latest) { (token) -> SignalProducer<Optional<TweetViewModel>, NSError> in
+                if let tokend = token?.access_token{
+                    UserDefaults.standard.set(Mapper<BearerToken>().toJSON(token!), forKey: "bearToken")
+                    UserDefaults.standard.synchronize()
+                }
                 return self.getTweetsWith(token: token!)
             }
             .flatMapError { (error) -> SignalProducer<Optional<TweetViewModel>, NSError> in
                 print(error)
+                self.isSearching.value = false
                 return SignalProducer.empty
             }
             .startWithResult { (result) in
-               print(result.value!)
+                print(result.value!)
+                self.isSearching.value = false
+                if let nextURL:String = result.value!!.nextPageURL{
+                    self.nextPageURL = nextURL
+                }
+                else{
+                    self.isLastPage.value = true
+                }
+                self.tweets.value.append(contentsOf: result.value!!.statuses)
         }
     }
     
     fileprivate func authenticateWith() -> SignalProducer<Optional<BearerToken>, NSError>{
+        
+        if let tokenObj = UserDefaults.standard.value(forKey: "bearToken"){
+            return SignalProducer{
+                (observer:Observer<Optional<BearerToken>, NSError>, _) in
+                if let mappedProperly = Mapper<BearerToken>().map(JSONObject: tokenObj){
+                    observer.send(value: mappedProperly)
+                }
+                else{
+                    observer.send(error: NSError.init(domain: "Cache not found", code: -1, userInfo: nil))
+                }
+            }
+        }
         
         return self._networkLayer.mappableWithRequest(url: self._endPoint.bearerTokenURL, method: HTTPMethod.post, params: [
             "grant_type":"client_credentials"], headers: ["Content-Type":"application/x-www-form-urlencoded;charset=UTF-8", "Authorization": "Basic" + " " + Credentials.combinedValue], parameterEncoding: URLEncoding.default)
@@ -65,7 +100,24 @@ class TweetMentionViewModel:BaseViewModel{
     
     
     fileprivate func getTweetsWith(token:BearerToken) -> SignalProducer<Optional<TweetViewModel>, NSError>{
-        return self._networkLayer.mappableWithRequest(url: self._endPoint.tweetSearchURL, method: HTTPMethod.get, params: ["q": mention], headers: ["Authorization": token.access_token], parameterEncoding: JSONEncoding.default)
+   //     let endpoint = nextPageURL != nil ? self._endPoint.tweetSearchURL + nextPageURL! : self._endPoint.tweetSearchURL
+        let endpoint = self._endPoint.tweetSearchURL
+        var params:[String:Any] = [:]
+        
+        if nextPageURL == nil{
+            params = ["q":mention, "count": 8]
+        }
+        else{
+            if let items = URLComponents(string: self.nextPageURL!)?.queryItems{
+                for item in items where item.name != "q"{
+                   
+                    params[item.name] = item.value!
+                }
+                
+            }
+            params["q"] = mention
+        }
+        return self._networkLayer.mappableWithRequest(url: endpoint, method: HTTPMethod.get, params: params, headers: ["Authorization": "Bearer" + " " + token.access_token], parameterEncoding: URLEncoding.default)
     }
     
 }

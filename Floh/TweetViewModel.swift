@@ -12,10 +12,12 @@ import ObjectMapper
 class TweetViewModel:BaseViewModel, Mappable{
     
     var statuses:[StatusViewModel] = []
+    var nextPageURL:String?
     
      func mapping(map: Map){
         
       statuses <- map["statuses"]
+      nextPageURL <- map["search_metadata.next_results"]
     }
     required init?(map: Map){
         super.init()
@@ -37,6 +39,7 @@ class StatusViewModel:BaseViewModel, Mappable{
         tweetText <- map["text"]
         avatarURL <- map["user.profile_image_url_https"]
         userName <- map["user.name"]
+        
     }
     required init?(map: Map){
         super.init()

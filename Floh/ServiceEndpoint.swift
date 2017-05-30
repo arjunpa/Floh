@@ -24,12 +24,12 @@ struct Credentials{
 protocol EndpointProtocol{
     static var bearerTokenURL:String{get}
     static var tweetSearchURL:String{get}
+    static var baseURL:String{get}
 }
 
 struct ServiceEndpoint:EndpointProtocol{
     
     static let bearerTokenURL = "https://api.twitter.com/oauth2/token"
     static let tweetSearchURL = "https://api.twitter.com/1.1/search/tweets.json"
-    
-
+    static let baseURL = "https://api.twitter.com"
 }

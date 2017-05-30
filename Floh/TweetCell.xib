@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="TweetCell" customModule="Floh" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="94"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="94"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YBh-RN-Dua">
+                        <rect key="frame" x="8" y="8" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="a4w-2z-yVi"/>
+                            <constraint firstAttribute="width" constant="40" id="evy-cP-flt"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hoY-3u-XIy">
+                        <rect key="frame" x="54" y="17.5" width="42" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="Lorem ipsum dolor sit er elit " textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cej-NV-0fr">
+                        <rect key="frame" x="8" y="53" width="304" height="33"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    </textView>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="Cej-NV-0fr" firstAttribute="top" secondItem="YBh-RN-Dua" secondAttribute="bottom" constant="5" id="A6F-l6-XaT"/>
+                <constraint firstAttribute="bottom" secondItem="Cej-NV-0fr" secondAttribute="bottom" constant="8" id="ESX-C9-O1t"/>
+                <constraint firstItem="hoY-3u-XIy" firstAttribute="centerY" secondItem="YBh-RN-Dua" secondAttribute="centerY" id="HgD-6R-rnO"/>
+                <constraint firstItem="YBh-RN-Dua" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="Kzu-gL-PGz"/>
+                <constraint firstItem="Cej-NV-0fr" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="NhN-NF-2Qg"/>
+                <constraint firstAttribute="trailing" secondItem="Cej-NV-0fr" secondAttribute="trailing" constant="8" id="c6D-wr-SHG"/>
+                <constraint firstItem="YBh-RN-Dua" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="fmT-cD-rys"/>
+                <constraint firstItem="hoY-3u-XIy" firstAttribute="leading" secondItem="YBh-RN-Dua" secondAttribute="trailing" constant="6" id="quW-z5-RiJ"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="hoY-3u-XIy" secondAttribute="trailing" constant="8" id="rot-od-sTS"/>
+            </constraints>
+            <size key="customSize" width="320" height="94"/>
+            <connections>
+                <outlet property="avatarImageView" destination="YBh-RN-Dua" id="4Lc-DL-JRl"/>
+                <outlet property="name" destination="hoY-3u-XIy" id="UOy-qU-Sv3"/>
+                <outlet property="tweetText" destination="Cej-NV-0fr" id="LXU-02-O7b"/>
+            </connections>
+            <point key="canvasLocation" x="-12" y="51"/>
+        </collectionViewCell>
+    </objects>
+</document>

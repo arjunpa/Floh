@@ -20,3 +20,15 @@ extension String{
         return urlEncodeUsingRFC1798(unendodedStr: self)
     }
 }
+
+extension Array {
+    
+    /// Safely indexes into an array by converting out of bounds errors to nils.
+    public func safeIndex(i : Int) -> Element? {
+        if i < self.count && i >= 0 {
+            return self[i]
+        } else {
+            return nil
+        }
+    }
+}
